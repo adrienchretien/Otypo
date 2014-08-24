@@ -11,23 +11,24 @@ define(function (require, exports, module) {
         Menus          = brackets.getModule("command/Menus");
 
     // Constants
-    var COMMAND_ID = "neol.punctuation.fix";
-    var COMMAND_SAVE_ID = "neol.punctuation.fixonsave";
+    var COMMAND_ID = "neol.punctuation.fix",
+        COMMAND_SAVE_ID = "neol.punctuation.fixonsave";
+    
+    /**
+     * Fix the current document.
+     */
+    function _fixDocument(doc) {
+        console.log(doc.getText());
+    }
     
     /**
      * Handle click on "Fix punctuation" menu item.
      */
     function _fixCommandClick() {
-        // Fix the current selected texts or the whole document
         var editor = EditorManager.getFocusedEditor();
         
-        if (editor.getSelectedText() !== "") {
-            // Fix selected texts
-            var selections = editor.getSelections();
-            console.log('Punctuations in selections are fixed in : ' + editor.getSelectedText());
-        } else {
-            // Fix the whole documents
-            console.log('Punctuations in the document are fixed now.');
+        if (editor) {
+            _fixDocument(editor.document);
         }
     }
     
@@ -35,8 +36,7 @@ define(function (require, exports, module) {
      * Handle click on "Fix punctuation on save" menu item.
      */
     function _fixOnSaveCommandClick() {
-        // Add or remove a listener on document 'just before save' event
-        console.log('Add or remove a listener on document "just before save" event.');
+        // Add or remove a listener on document 'just before save' event ?
     }
 
 
