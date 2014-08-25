@@ -4,21 +4,30 @@
 /** Extension that fix punctuation in the current document. */
 define(function (require, exports, module) {
     "use strict";
+    
+    // Fixers
+    var Apostrophe      = require('fixers/Apostrophe'),
+        QuotationMarks  = require('fixers/QuotationMarks');
 
     // Brackets modules
-    var CommandManager = brackets.getModule("command/CommandManager"),
-        EditorManager  = brackets.getModule("editor/EditorManager"),
-        Menus          = brackets.getModule("command/Menus");
+    var CommandManager  = brackets.getModule("command/CommandManager"),
+        EditorManager   = brackets.getModule("editor/EditorManager"),
+        Menus           = brackets.getModule("command/Menus");
 
     // Constants
-    var COMMAND_ID = "neol.punctuation.fix",
+    var COMMAND_ID      = "neol.punctuation.fix",
         COMMAND_SAVE_ID = "neol.punctuation.fixonsave";
     
     /**
-     * Fix the current document.
+     * Apply fixers on a raw text.
      */
-    function _fixDocument(doc) {
-        console.log(doc.getText());
+    function _applyFixers(content) {
+        if (typeof content === "string") {
+            content = QuotationMarks.fix(content);
+            content = Apostrophe.fix(content);
+        }
+        
+        return content;
     }
     
     /**
@@ -27,8 +36,13 @@ define(function (require, exports, module) {
     function _fixCommandClick() {
         var editor = EditorManager.getFocusedEditor();
         
-        if (editor) {
-            _fixDocument(editor.document);
+        if (editor && editor.hasSelection()) {
+            var text = editor.getSelectedText(),
+                selection = editor.getSelection();
+            
+            text = _applyFixers(text);
+            
+            editor.document.replaceRange(text, selection.start, selection.end);
         }
     }
     
