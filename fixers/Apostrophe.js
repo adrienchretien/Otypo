@@ -2,11 +2,11 @@
 /*global define, $, brackets */
 
 define(function (require, exports, module) {
-	"use strict";
-	
+    "use strict";
+
     function fix(content) {
         return content.replace(/(\w+)'(\w)/gi, '$1’$2');
     }
-    
-	exports.fix = fix;
+
+    exports.fix = fix;
 });
