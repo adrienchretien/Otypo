@@ -10,11 +10,15 @@ define(function (require, exports, module) {
         // marks.
         fr_FR = [{start: '« ', end: ' »'}, {start: '“', end: '”'}, {start: '‘', end: '’'}];
 
-    var regexp = /(?:^|\s)(['"])(.*)(\1)(?:\s|$)/;
+    var regexp = /\B(["'])(.+?)(\1)\B/gm;
 
     function _fixMarks(content, marksSets) {
+        var nestLevel = -1,
+            set = null;
+        
         while (content.match(regexp) && marksSets.length > 0) {
-            var set = marksSets.shift();
+            nestLevel++;
+            set = marksSets[nestLevel];
             content = content.replace(regexp, set.start + '$2' + set.end);
         }
 
