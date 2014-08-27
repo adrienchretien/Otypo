@@ -18,28 +18,30 @@ define(function (require, exports, module) {
     var COMMAND_ID      = "neol.punctuation.fix";
 
     /**
-     * Apply fixers on a raw text.
+     * Fix typographical syntax on a string.
+     * @param {string} rawText - The string to fix.
+     * @returns {string} The string fixed.
      */
-    function _applyFixers(content) {
-        if (typeof content === "string") {
-            content = QuotationMarks.fix(content);
-            content = Apostrophe.fix(content);
+    function _fixString(rawText) {
+        if (typeof rawText === "string") {
+            rawText = QuotationMarks.fix(rawText);
+            rawText = Apostrophe.fix(rawText);
         }
 
-        return content;
+        return rawText;
     }
 
     /**
-     * Handle click on "Fix punctuation" menu item.
+     * Handle click on the "Fix punctuation" menu item.
      */
-    function _fixCommandClick() {
+    function _commandClick() {
         var editor = EditorManager.getFocusedEditor();
 
         if (editor && editor.hasSelection()) {
             var text = editor.getSelectedText(),
                 selection = editor.getSelection();
 
-            text = _applyFixers(text);
+            text = _fixString(text);
 
             editor.document.replaceRange(text, selection.start, selection.end);
         }
@@ -47,19 +49,19 @@ define(function (require, exports, module) {
 
     // Edit menu
     var menu = Menus.getMenu(Menus.AppMenuBar.EDIT_MENU),
-        windowsShortcut = {
+        windowsKeyBinding = {
             key: "Shift-O",
             platform: "win"
         },
-        macShortcut = {
+        macKeyBinding = {
             key: "Shift-O",
             platform: "mac"
         },
-        shortcuts = [windowsShortcut, macShortcut];
+        keyBindings = [windowsKeyBinding, macKeyBinding];
 
-    CommandManager.register("Fix punctuation", COMMAND_ID, _fixCommandClick);
+    CommandManager.register("Fix punctuation", COMMAND_ID, _commandClick);
 
     menu.addMenuDivider();
-    menu.addMenuItem(COMMAND_ID, shortcuts);
+    menu.addMenuItem(COMMAND_ID, keyBindings);
 });
 
