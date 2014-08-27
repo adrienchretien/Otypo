@@ -5,7 +5,7 @@ define(function (require, exports, module) {
     "use strict";
 
     function fix(content) {
-        return content.replace(/(\w+)'(\w)/gi, '$1’$2');
+        return content.replace(/\b'\b/gi, '’');
     }
 
     exports.fix = fix;

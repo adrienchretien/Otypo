@@ -50,11 +50,11 @@ define(function (require, exports, module) {
     // Edit menu
     var menu = Menus.getMenu(Menus.AppMenuBar.EDIT_MENU),
         windowsKeyBinding = {
-            key: "Shift-O",
+            key: "Shift-F2",
             platform: "win"
         },
         macKeyBinding = {
-            key: "Shift-O",
+            key: "Shift-F2",
             platform: "mac"
         },
         keyBindings = [windowsKeyBinding, macKeyBinding];
@@ -64,4 +64,3 @@ define(function (require, exports, module) {
     menu.addMenuDivider();
     menu.addMenuItem(COMMAND_ID, keyBindings);
 });
-
