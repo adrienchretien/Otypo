@@ -5,7 +5,10 @@ define(function (require, exports, module) {
     "use strict";
 
     function fix(content) {
-        return content.replace(/\b'\b/g, "’");
+        content = content.replace(/---/g, "—");
+        content = content.replace(/--/g, "–");
+
+        return content;
     }
 
     exports.fix = fix;

@@ -6,8 +6,7 @@ define(function (require, exports, module) {
 
     // Constants
     var en_US = [{start: '“', end: '”'}, {start: '‘', end: '’'}],
-        // Unsafe characters are no-no-breakspace in angled quotation
-        // marks.
+        // Unsafe characters are narrow no-break space in french quotes.
         fr_FR = [{start: '« ', end: ' »'}, {start: '“', end: '”'}, {start: '‘', end: '’'}];
 
     var regexp = /\B(["'])(.+?)(\1)\B/gm;
@@ -15,7 +14,7 @@ define(function (require, exports, module) {
     function _fixMarks(content, marksSets) {
         var nestLevel = -1,
             set = null;
-        
+
         while (content.match(regexp) && marksSets.length > 0) {
             nestLevel++;
             set = marksSets[nestLevel];
@@ -34,6 +33,6 @@ define(function (require, exports, module) {
 
         return content;
     }
-    
+
     exports.fix = fix;
 });

@@ -4,8 +4,12 @@
 define(function (require, exports, module) {
     "use strict";
 
-    function fix(content) {
-        return content.replace(/\b'\b/g, "’");
+    function fix(content, locale) {
+        if (locale === "fr" || locale === "fr_FR") {
+            content = content.replace(/\s?:\s?(?=\D)/, " : ");
+        }
+
+        return content;
     }
 
     exports.fix = fix;
