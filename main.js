@@ -28,7 +28,6 @@ define(function (require, exports, module) {
         if (typeof rawText === "string") {
             rawText = QuotationMarks.fix(rawText);
             rawText = Apostrophe.fix(rawText);
-            rawText = Colon.fix(rawText);
             rawText = Dashes.fix(rawText);
         }
 
