@@ -7,7 +7,6 @@ define(function (require, exports, module) {
 
     // Fixers
     var Apostrophe     = require('fixers/Apostrophe'),
-        Colon          = require('fixers/Colon'),
         Dashes         = require('fixers/Dashes'),
         QuotationMarks = require('fixers/QuotationMarks');
 
