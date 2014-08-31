@@ -10,14 +10,18 @@ define(function (require, exports, module) {
         Dashes         = require('fixers/Dashes'),
         QuotationMarks = require('fixers/QuotationMarks');
 
+    // Otypo modules
+    var Locale = require('./Locale');
+
     // Brackets modules
     var CommandManager = brackets.getModule("command/CommandManager"),
         EditorManager  = brackets.getModule("editor/EditorManager"),
         Menus          = brackets.getModule("command/Menus");
 
     // Constants
-    var COMMAND_ID            = "neol.otypo.editmenu.fix",
-        CONTEXTUAL_COMMAND_ID = "neol.otypo.contextualmenu.fix";
+    var COMMAND_ID             = "neol.otypo.editmenu.fix",
+        CONTEXTUAL_COMMAND_ID  = "neol.otypo.contextualmenu.fix",
+        LOCALE_PREF_COMMAND_ID = "neol.otypo.locale.prefsmenu";
 
     /**
      * Fix typographical syntax on a string.
@@ -54,10 +58,6 @@ define(function (require, exports, module) {
         }
     }
 
-    /**
-     * Menus
-     */
-
     // Key bindings
     var keyBindings = [{
             key: "Shift-F2",
@@ -67,16 +67,15 @@ define(function (require, exports, module) {
             platform: "mac"
         }];
 
-    // Locale submenu
-
-
     // Edit menu
     var menu = Menus.getMenu(Menus.AppMenuBar.EDIT_MENU);
 
     CommandManager.register("Fix punctuation", COMMAND_ID, _commandClick);
+    CommandManager.register("Locale preferences", LOCALE_PREF_COMMAND_ID, Locale.commandClick);
 
     menu.addMenuDivider();
     menu.addMenuItem(COMMAND_ID, keyBindings);
+    menu.addMenuItem(LOCALE_PREF_COMMAND_ID);
 
     // Contextual menu
     var contextualMenu = Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU);

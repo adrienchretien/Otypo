@@ -1,0 +1,24 @@
+<div class="otypo-locale-preferences template modal">
+    <div class="modal-header">
+        <h1 class="dialog-title">{{title}}</h1>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label">Select a locale:</label>
+                <div class="controls">
+                    <select>
+                        {{#locales}}
+                        <option value="{{id}}" data-target="locale">{{name}}</option>
+                        {{/locales}}
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        {{#buttons}}
+        <button class="dialog-button btn {{className}}" data-button-id="{{id}}">{{{text}}}</button>
+        {{/buttons}}
+    </div>
+</div>
