@@ -4,8 +4,11 @@
 define(function (require, exports, module) {
     "use strict";
 
+    var Locale = require("../Locale"),
+        subString = Locale.getMarks(Locale.APOSTROPHE);
+
     function fix(content) {
-        return content.replace(/\b'\b/g, "’");
+        return content.replace(/\b'\b/g, subString);
     }
 
     exports.fix = fix;

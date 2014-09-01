@@ -40,9 +40,9 @@ define(function (require, exports, module) {
             exclamationMark: "!",
             questionMark: "?",
             quotationMarks: [{opening: "“", closing: "”"}, {opening: "‘", closing: "’"}],
-            parentheses: {start: " (", end: ") "},
+            parentheses: {opening: " (", closing: ") "},
             semicolon: ";",
-            squareBrackets: {start: " [", end: "] "}
+            squareBrackets: {opening: " [", closing: "] "}
         },
         {
             // Infos
@@ -58,9 +58,39 @@ define(function (require, exports, module) {
     ];
 
     /**
-     * Handle click on the “Locale preferences” menu item.
+     * Get the current locale defined as preference.
      */
-    function _commandClick() {
+    function _getCurrentLocale() {
+        var current,
+            setting = prefs.get("locale");
+
+        locales.forEach(function (locale) {
+            if (locale.id === setting) {
+                current = locale;
+            }
+        });
+
+        return current;
+    }
+
+    /**
+     * Get the marks from its name. Valid names are one of the constants.
+     *
+     * @return string When it's a simple group of characters.
+     * @return object When it's a set of strings.
+     * @return array  When it's a collection of sets.
+     */
+    function _getMarks(name) {
+        var deflt = locales[0],
+            current = _getCurrentLocale();
+
+        return current[name] || deflt[name];
+    }
+
+    /**
+     * Show the preferences dialog.
+     */
+    function _showDialog() {
         var templateVars = {
                 buttons: [{
                     className : Dialogs.DIALOG_BTN_CLASS_NORMAL,
@@ -98,20 +128,6 @@ define(function (require, exports, module) {
         $select.on("change", setLocale).val(currentSetting);
     }
 
-    function _getSubstring(name) {
-        var base = locales[0],
-            current,
-            setting = prefs.get("locale");
-
-        locales.forEach(function (locale) {
-            if (locale.id === setting) {
-                current = locale;
-            }
-        });
-
-        return current[name] || base[name];
-    }
-
     prefs.definePreference("locale", "string", "default");
     prefs.save();
 
@@ -126,6 +142,6 @@ define(function (require, exports, module) {
     exports.SEMICOLON       = SEMICOLON;
     exports.SQUAREBRACKETS  = SQUAREBRACKETS;
 
-    exports.commandClick    = _commandClick;
-    exports.getSubstring    = _getSubstring;
+    exports.showDialog      = _showDialog;
+    exports.getMarks        = _getMarks;
 });

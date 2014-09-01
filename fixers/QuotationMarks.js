@@ -4,15 +4,20 @@
 define(function (require, exports, module) {
     "use strict";
 
-    function fix(content, locale) {
-        var nestLevel = -1,
-            regexp = /\B(["'])(.+?)(\1)\B/gm,
-            set = [{start: '“', end: '”'}, {start: '‘', end: '’'}];
+    var Locale = require("../Locale"),
+        marks = Locale.getMarks(Locale.QUOTATIONMARKS);
 
-        while (content.match(regexp) && marksSets.length > 0) {
+    function fix(content, locale) {
+        var length = marks.length,
+            nestLevel = 0,
+            regexp = /\B(["'])(.*)(\1)\B/gm,
+            set;
+
+        while (content.match(regexp) && length > 0 && nestLevel < length) {
+            set = marks[nestLevel];
+            console.log(set);
+            content = content.replace(regexp, set.opening + '$2' + set.closing);
             nestLevel++;
-            set = marksSets[nestLevel];
-            content = content.replace(regexp, set.start + '$2' + set.end);
         }
 
         return content;

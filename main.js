@@ -71,7 +71,7 @@ define(function (require, exports, module) {
     var menu = Menus.getMenu(Menus.AppMenuBar.EDIT_MENU);
 
     CommandManager.register("Fix punctuation", COMMAND_ID, _commandClick);
-    CommandManager.register("Locale preferences", LOCALE_PREF_COMMAND_ID, Locale.commandClick);
+    CommandManager.register("Locale preferences", LOCALE_PREF_COMMAND_ID, Locale.showDialog);
 
     menu.addMenuDivider();
     menu.addMenuItem(COMMAND_ID, keyBindings);
