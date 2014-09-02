@@ -5,18 +5,22 @@
 define(function (require, exports, module) {
     "use strict";
 
-    // Fixers
-    var Apostrophe     = require('fixers/Apostrophe'),
-        Dashes         = require('fixers/Dashes'),
-        QuotationMarks = require('fixers/QuotationMarks');
-
-    // Otypo modules
-    var Locale = require('./Locale');
-
     // Brackets modules
     var CommandManager = brackets.getModule("command/CommandManager"),
         EditorManager  = brackets.getModule("editor/EditorManager"),
         Menus          = brackets.getModule("command/Menus");
+
+    // Otypo modules
+    var Locale = require('./Locale');
+
+    // Fixers
+    var Apostrophe      = require('fixers/Apostrophe'),
+        Colon           = require('fixers/Colon'),
+        Dashes          = require('fixers/Dashes'),
+        ExclamationMark = require('fixers/ExclamationMark'),
+        QuestionMark    = require('fixers/QuestionMark'),
+        QuotationMarks  = require('fixers/QuotationMarks'),
+        SemiColon       = require('fixers/SemiColon');
 
     // Constants
     var COMMAND_ID             = "neol.otypo.editmenu.fix",
@@ -31,8 +35,13 @@ define(function (require, exports, module) {
     function _fixString(rawText) {
         if (typeof rawText === "string") {
             rawText = QuotationMarks.fix(rawText);
+
             rawText = Apostrophe.fix(rawText);
+            rawText = Colon.fix(rawText);
             rawText = Dashes.fix(rawText);
+            rawText = ExclamationMark.fix(rawText);
+            rawText = QuestionMark.fix(rawText);
+            rawText = SemiColon.fix(rawText);
         }
 
         return rawText;

@@ -15,7 +15,6 @@ define(function (require, exports, module) {
 
         while (content.match(regexp) && length > 0 && nestLevel < length) {
             set = marks[nestLevel];
-            console.log(set);
             content = content.replace(regexp, set.opening + '$2' + set.closing);
             nestLevel++;
         }
