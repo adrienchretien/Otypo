@@ -17,6 +17,7 @@ define(function (require, exports, module) {
     var Apostrophe      = require('fixers/Apostrophe'),
         Colon           = require('fixers/Colon'),
         Dashes          = require('fixers/Dashes'),
+        Ellipsis          = require('fixers/Ellipsis'),
         ExclamationMark = require('fixers/ExclamationMark'),
         QuestionMark    = require('fixers/QuestionMark'),
         QuotationMarks  = require('fixers/QuotationMarks'),
@@ -34,11 +35,15 @@ define(function (require, exports, module) {
      */
     function _fixString(rawText) {
         if (typeof rawText === "string") {
+            // QuestionMarks and Apostrophe can share the single closing quote
+            // character. Searching for a better solution than QuestionMarks
+            // precede Apostrophe.
             rawText = QuotationMarks.fix(rawText);
-
             rawText = Apostrophe.fix(rawText);
+
             rawText = Colon.fix(rawText);
             rawText = Dashes.fix(rawText);
+            rawText = Ellipsis.fix(rawText);
             rawText = ExclamationMark.fix(rawText);
             rawText = QuestionMark.fix(rawText);
             rawText = SemiColon.fix(rawText);
