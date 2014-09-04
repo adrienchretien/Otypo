@@ -8,7 +8,6 @@ define(function (require, exports, module) {
         subString = Locale.getMarks(Locale.QUESTIONMARK);
 
     function fix(content) {
-        console.log(subString);
         return content.replace(/\s?\?/gm, subString);
     }
 

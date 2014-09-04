@@ -17,7 +17,7 @@ define(function (require, exports, module) {
     var Apostrophe      = require('fixers/Apostrophe'),
         Colon           = require('fixers/Colon'),
         Dashes          = require('fixers/Dashes'),
-        Ellipsis          = require('fixers/Ellipsis'),
+        Ellipsis        = require('fixers/Ellipsis'),
         ExclamationMark = require('fixers/ExclamationMark'),
         QuestionMark    = require('fixers/QuestionMark'),
         QuotationMarks  = require('fixers/QuotationMarks'),
@@ -84,8 +84,8 @@ define(function (require, exports, module) {
     // Edit menu
     var menu = Menus.getMenu(Menus.AppMenuBar.EDIT_MENU);
 
-    CommandManager.register("Fix punctuation", COMMAND_ID, _commandClick);
-    CommandManager.register("Locale preferences", LOCALE_PREF_COMMAND_ID, Locale.showDialog);
+    CommandManager.register("Otypo fix", COMMAND_ID, _commandClick);
+    CommandManager.register("Otypo locale preferences", LOCALE_PREF_COMMAND_ID, Locale.showDialog);
 
     menu.addMenuDivider();
     menu.addMenuItem(COMMAND_ID, keyBindings);

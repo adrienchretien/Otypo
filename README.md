@@ -6,6 +6,12 @@ For now, it fix only selected parts of raw texts.
 
 ## What does it fix
 
-- Apostrophes (`'` to closing single “curly” quote);
-- Dashes (`--` to en dash and `---` to em-dash);
-- Quotation marks (pairs of `'` and `"` to single and double “curly” quotes);
+- Apostrophes: `'` to `’`;
+- Dashes: `--` to `–` and `---` to `—`;
+- Ellipsis: `...` to `…`;
+- Quotation marks: pairs of `'…'` and `"…"` to `‘…’` and `“…”`.
+
+# Supported locale
+
+- en_US
+- fr_FR

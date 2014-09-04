@@ -1,8 +1,8 @@
 {
-    "name": "neol.micro-typo-checker",
-    "title": "Micro typo checker",
+    "name": "neol.otypo",
+    "title": "Otypo",
     "description": "Fix common micro-typography like dumb quotes, em dash and others.",
-    "homepage": "https://github.com/neol/micro-typo-checker",
+    "homepage": "https://github.com/neol/otypo",
     "version": "1.0.0",
     "author": "Neol",
     "license": "MIT",
