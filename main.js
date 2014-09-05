@@ -94,7 +94,7 @@ define(function (require, exports, module) {
     // Contextual menu
     var contextualMenu = Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU);
 
-    CommandManager.register("Fix typography", CONTEXTUAL_COMMAND_ID, _commandClick);
+    CommandManager.register("Otypo fix", CONTEXTUAL_COMMAND_ID, _commandClick);
 
     contextualMenu.addMenuItem(CONTEXTUAL_COMMAND_ID);
 });
