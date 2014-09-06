@@ -8,49 +8,17 @@ define(function (require, exports, module) {
     // Brackets modules
     var CommandManager = brackets.getModule("command/CommandManager"),
         EditorManager  = brackets.getModule("editor/EditorManager"),
+        FileUtils      = brackets.getModule("file/FileUtils"),
         Menus          = brackets.getModule("command/Menus");
 
     // Otypo modules
-    var Locale = require('./Locale');
-
-    // Fixers
-    var Apostrophe      = require('fixers/Apostrophe'),
-        Colon           = require('fixers/Colon'),
-        Dashes          = require('fixers/Dashes'),
-        Ellipsis        = require('fixers/Ellipsis'),
-        ExclamationMark = require('fixers/ExclamationMark'),
-        QuestionMark    = require('fixers/QuestionMark'),
-        QuotationMarks  = require('fixers/QuotationMarks'),
-        SemiColon       = require('fixers/SemiColon');
+    var Fixer  = require('./Fixer'),
+        Locale = require('./Locale');
 
     // Constants
     var COMMAND_ID             = "neol.otypo.editmenu.fix",
         CONTEXTUAL_COMMAND_ID  = "neol.otypo.contextualmenu.fix",
         LOCALE_PREF_COMMAND_ID = "neol.otypo.locale.prefsmenu";
-
-    /**
-     * Fix typographical syntax on a string.
-     * @param {string} rawText The string to fix.
-     * @returns {string} The string fixed.
-     */
-    function _fixString(rawText) {
-        if (typeof rawText === "string") {
-            // QuestionMarks and Apostrophe can share the single closing quote
-            // character. Searching for a better solution than QuestionMarks
-            // precede Apostrophe.
-            rawText = QuotationMarks.fix(rawText);
-            rawText = Apostrophe.fix(rawText);
-
-            rawText = Colon.fix(rawText);
-            rawText = Dashes.fix(rawText);
-            rawText = Ellipsis.fix(rawText);
-            rawText = ExclamationMark.fix(rawText);
-            rawText = QuestionMark.fix(rawText);
-            rawText = SemiColon.fix(rawText);
-        }
-
-        return rawText;
-    }
 
     /**
      * Handle click on the “Fix punctuation” menu item.
@@ -65,7 +33,7 @@ define(function (require, exports, module) {
             selections.forEach(function (sel) {
                 var text = editor.document.getRange(sel.start, sel.end);
 
-                text = _fixString(text);
+                text = Fixer.fixString(text);
 
                 editor.document.replaceRange(text, sel.start, sel.end);
             });
