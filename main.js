@@ -8,7 +8,6 @@ define(function (require, exports, module) {
     // Brackets modules
     var CommandManager = brackets.getModule("command/CommandManager"),
         EditorManager  = brackets.getModule("editor/EditorManager"),
-        FileUtils      = brackets.getModule("file/FileUtils"),
         Menus          = brackets.getModule("command/Menus");
 
     // Otypo modules
