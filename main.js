@@ -25,17 +25,26 @@ define(function (require, exports, module) {
     function _commandClick() {
         var editor = EditorManager.getFocusedEditor();
 
-        if (editor && editor.hasSelection()) {
+        if (editor) {
+            if (editor.hasSelection()) {
+                // Fix selections
+                var selections = editor.getSelections();
 
-            var selections = editor.getSelections();
+                selections.forEach(function (sel) {
+                    var text = editor.document.getRange(sel.start, sel.end);
 
-            selections.forEach(function (sel) {
-                var text = editor.document.getRange(sel.start, sel.end);
+                    text = Fixer.fixString(text);
+
+                    editor.document.replaceRange(text, sel.start, sel.end);
+                });
+            } else {
+                // Fix the whole document
+                var text = editor.document.getText();
 
                 text = Fixer.fixString(text);
 
-                editor.document.replaceRange(text, sel.start, sel.end);
-            });
+                editor.document.setText(text);
+            }
         }
     }
 
