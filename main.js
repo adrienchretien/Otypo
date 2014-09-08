@@ -6,9 +6,10 @@ define(function (require, exports, module) {
     "use strict";
 
     // Brackets modules
-    var CommandManager = brackets.getModule("command/CommandManager"),
-        EditorManager  = brackets.getModule("editor/EditorManager"),
-        Menus          = brackets.getModule("command/Menus");
+    var CommandManager  = brackets.getModule("command/CommandManager"),
+        EditorManager   = brackets.getModule("editor/EditorManager"),
+        FileUtils       = brackets.getModule("file/FileUtils"),
+        Menus           = brackets.getModule("command/Menus");
 
     // Otypo modules
     var Fixer  = require('./Fixer'),
@@ -20,6 +21,33 @@ define(function (require, exports, module) {
         LOCALE_PREF_COMMAND_ID = "neol.otypo.locale.prefsmenu";
 
     /**
+     * Fix selections as raw text.
+     * @param {editor} An editor object.
+     */
+    function _fixSelections(editor) {
+        var selections = editor.getSelections();
+
+        selections.forEach(function (sel) {
+            var text = editor.document.getRange(sel.start, sel.end);
+
+            text = Fixer.fixString(text);
+
+            editor.document.replaceRange(text, sel.start, sel.end);
+        });
+    }
+
+    /**
+     * Fix the current document.
+     */
+    function _fixDocument(doc) {
+        var text = doc.getText();
+
+        text = Fixer.fixString(text);
+
+        doc.setText(text);
+    }
+
+    /**
      * Handle click on the “Fix punctuation” menu item.
      */
     function _commandClick() {
@@ -27,23 +55,9 @@ define(function (require, exports, module) {
 
         if (editor) {
             if (editor.hasSelection()) {
-                // Fix selections
-                var selections = editor.getSelections();
-
-                selections.forEach(function (sel) {
-                    var text = editor.document.getRange(sel.start, sel.end);
-
-                    text = Fixer.fixString(text);
-
-                    editor.document.replaceRange(text, sel.start, sel.end);
-                });
+                _fixSelections(editor);
             } else {
-                // Fix the whole document
-                var text = editor.document.getText();
-
-                text = Fixer.fixString(text);
-
-                editor.document.setText(text);
+                _fixDocument(editor.document);
             }
         }
     }
