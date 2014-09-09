@@ -12,8 +12,9 @@ define(function (require, exports, module) {
         Menus           = brackets.getModule("command/Menus");
 
     // Otypo modules
-    var Fixer  = require('./Fixer'),
-        Locale = require('./Locale');
+    var Fixer      = require("./Fixer"),
+        HtmlParser = require("./parsers/HtmlParser"),
+        Locale     = require("./Locale");
 
     // Constants
     var COMMAND_ID             = "neol.otypo.editmenu.fix",
@@ -38,11 +39,17 @@ define(function (require, exports, module) {
 
     /**
      * Fix the current document.
+     * @param {document} A document object.
      */
     function _fixDocument(doc) {
         var text = doc.getText();
 
-        text = Fixer.fixString(text);
+        switch (doc.language) {
+            case "html":
+                text = HtmlParser.parse(text);
+            default:
+                text = Fixer.fixString(text);
+        }
 
         doc.setText(text);
     }
