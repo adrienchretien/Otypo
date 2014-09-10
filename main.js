@@ -44,11 +44,13 @@ define(function (require, exports, module) {
     function _fixDocument(doc) {
         var text = doc.getText();
 
-        switch (doc.language) {
-            case "html":
-                text = HtmlParser.parse(text);
-            default:
-                text = Fixer.fixString(text);
+        switch (doc.language._id) {
+        case "html":
+            text = HtmlParser.parse(text, Fixer.fixString);
+            break;
+        default:
+            text = Fixer.fixString(text);
+            break;
         }
 
         doc.setText(text);
