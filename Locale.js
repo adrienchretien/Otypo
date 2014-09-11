@@ -98,10 +98,25 @@ define(function (require, exports, module) {
     }
 
     /**
+     * Report the html locale auto recognition state.
+     */
+    function _htmlLocaleAuto() {
+        return prefs.get("html");
+    }
+
+    /**
      * Show the preferences dialog.
      */
     function _showDialog() {
-        var templateVars = {
+        var $checkbox,
+            $select,
+            html,
+            locale,
+            settings = {
+                html: prefs.get("html"),
+                locale: prefs.get("locale")
+            },
+            templateVars = {
                 buttons: [{
                     className : Dialogs.DIALOG_BTN_CLASS_NORMAL,
                     id        : Dialogs.DIALOG_BTN_CANCEL,
@@ -116,18 +131,20 @@ define(function (require, exports, module) {
             },
             template = Mustache.render(DialogTemplate, templateVars);
 
-        // Template relative variables
-        var currentSetting = prefs.get("locale"),
-            locale,
-            $select;
-
-        var setLocale = function (event) {
+        // Handle locale selection change.
+        function setLocale(event) {
             locale = $select.val();
-        };
+        }
+
+        // Handle html locale auto recognition checkbox change.
+        function setHtml(event) {
+            html = $checkbox.is(":checked");
+        }
 
         // Show dialog
         Dialogs.showModalDialogUsingTemplate(template).done(function (id) {
             if (id === Dialogs.DIALOG_BTN_OK) {
+                prefs.set("html", html);
                 prefs.set("locale", locale);
                 prefs.save();
             }
@@ -135,10 +152,15 @@ define(function (require, exports, module) {
 
         // We can define the $select now the dialog is displayed
         $select = $(".otypo-locale-preferences").find("select");
-        $select.on("change", setLocale).val(currentSetting);
+        $select.on("change", setLocale).val(settings.locale);
+
+        // Then the checkbox
+        $checkbox = $(".otypo-locale-preferences").find('[type="checkbox"]');
+        $checkbox.on("change", setHtml).val(settings.html);
     }
 
-    prefs.definePreference("locale", "string", "default");
+    prefs.definePreference("html", "boolean", false);
+    prefs.definePreference("locale", "string", DEFAULT_LOCALE_ID);
     prefs.save();
 
     exports.APOSTROPHE      = APOSTROPHE;
@@ -150,6 +172,7 @@ define(function (require, exports, module) {
     exports.QUOTATIONMARKS  = QUOTATIONMARKS;
     exports.SEMICOLON       = SEMICOLON;
 
-    exports.showDialog      = _showDialog;
     exports.getMarks        = _getMarks;
+    exports.htmlLocaleAuto  = _htmlLocaleAuto;
+    exports.showDialog      = _showDialog;
 });
