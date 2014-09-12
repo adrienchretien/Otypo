@@ -14,7 +14,7 @@ define(function (require, exports, module) {
     var DialogTemplate = require("text!htmlContent/locale-preferences-dialog.html");
 
     // Public constants
-    var DEFAULT_LOCALE_ID = "en_US",
+    var DEFAULT_LOCALE_ID = "en-US",
         APOSTROPHE = "apostrophe",
         COLON = "colon",
         DASHES = "dashes",
@@ -28,13 +28,13 @@ define(function (require, exports, module) {
     var locales = [
         {
             // Infos
-            id: "en_GB",
+            id: "en-GB",
             // Substrings
             quotationMarks: [{opening: "‘", closing: "’"}, {opening: "“", closing: "”"}]
         },
         {
             // Infos
-            id: "en_US",
+            id: "en-US",
             // Substrings
             apostrophe: "’",
             colon: ":",
@@ -47,7 +47,7 @@ define(function (require, exports, module) {
         },
         {
             // Infos
-            id: "fr_FR",
+            id: "fr-FR",
             // Substrings
             colon: " :",
             exclamationMark: " !",
@@ -59,8 +59,9 @@ define(function (require, exports, module) {
 
     /**
      * Get a locale by its id.
-     * @return {object} The corresponding locale.
-     * @return {null} If the id corresponding to any locales.
+     * @param {string} id - A valid locale id string ("en_GB", "en_US", "fr_FR").
+     * @return {object|null} The corresponding locale or null if the id
+     *                       corresponding to any locales.
      */
     function _getLocaleById(id) {
         var locale = null;
@@ -80,19 +81,22 @@ define(function (require, exports, module) {
      */
     function _getCurrentLocale() {
         var currentId = prefs.get("locale");
-        return _getLocaleById(currentId);
+        return _getLocaleById(currentId) || _getLocaleById(DEFAULT_LOCALE_ID);
     }
 
     /**
      * Get the marks from its name. Valid names are one of the constants.
      *
-     * @return {string} When it's a simple group of characters.
-     * @return {object} When it's a set of strings.
-     * @return {array}  When it's a collection of sets.
+     * @param {string} name - Name of the marks you want.
+     * @param {string} [localeID=currentLocaleId] - Locale id ("en_GB", "en_US" or "fr_FR").
+     *
+     * @return {string|object|array} Returns a string when it's a simple group of characters,
+     *                               an object when it's a set of strings or an array when
+     *                               it's a collection of sets.
      */
-    function _getMarks(name) {
+    function _getMarks(name, localeId) {
         var deflt = _getLocaleById(DEFAULT_LOCALE_ID),
-            current = _getCurrentLocale();
+            current = localeId ? _getLocaleById(localeId) : _getCurrentLocale();
 
         return current[name] || deflt[name];
     }

@@ -4,10 +4,18 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var Locale = require("../Locale"),
-        subString = Locale.getMarks(Locale.EXCLAMATIONMARK);
+    /**
+     * Fix a content exclamation marks.
+     * @param {string} content - String to fix.
+     * @param {string} [locale] - Valid locale id. Used to fix a content with
+     *                            specific locale. Else the locale specified
+     *                            as prefered is used.
+     * @return {string} - Content fixed.
+     */
+    var Locale = require("../Locale");
 
-    function fix(content) {
+    function fix(content, locale) {
+        var subString = Locale.getMarks(Locale.EXCLAMATIONMARK, locale);
         return content.replace(/\s?!/gm, subString);
     }
 

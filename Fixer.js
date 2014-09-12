@@ -16,23 +16,24 @@ define(function (require, exports, module) {
 
     /**
      * Fix typographical syntax on a string.
-     * @param {string} rawText The string to fix.
+     * @param {string} rawText - The string to fix.
+     * @param {string} [locale] - Secifiy a valid locale id to fix the raw string with.
      * @returns {string} The string fixed.
      */
-    function _fixString(rawText) {
+    function _fixString(rawText, locale) {
         if (typeof rawText === "string") {
             // QuestionMarks and Apostrophe can share the single closing quote
             // character. Searching for a better solution than QuestionMarks
             // precede Apostrophe.
-            rawText = QuotationMarks.fix(rawText);
-            rawText = Apostrophe.fix(rawText);
+            rawText = QuotationMarks.fix(rawText, locale);
+            rawText = Apostrophe.fix(rawText, locale);
 
-            rawText = Colon.fix(rawText);
-            rawText = Dashes.fix(rawText);
-            rawText = Ellipsis.fix(rawText);
-            rawText = ExclamationMark.fix(rawText);
-            rawText = QuestionMark.fix(rawText);
-            rawText = SemiColon.fix(rawText);
+            rawText = Colon.fix(rawText, locale);
+            rawText = Dashes.fix(rawText, locale);
+            rawText = Ellipsis.fix(rawText, locale);
+            rawText = ExclamationMark.fix(rawText, locale);
+            rawText = QuestionMark.fix(rawText, locale);
+            rawText = SemiColon.fix(rawText, locale);
         }
 
         return rawText;

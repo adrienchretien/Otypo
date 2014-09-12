@@ -4,10 +4,18 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var Locale = require("../Locale"),
-        subString = Locale.getMarks(Locale.ELLIPSIS);
+    var Locale = require("../Locale");
 
-    function fix(content) {
+    /**
+     * Fix a content ellipsis.
+     * @param {string} content - String to fix.
+     * @param {string} [locale] - Valid locale id. Used to fix a content with
+     *                            specific locale. Else the locale specified
+     *                            as prefered is used.
+     * @return {string} - Content fixed.
+     */
+    function fix(content, locale) {
+        var subString = Locale.getMarks(Locale.ELLIPSIS, locale);
         return content.replace(/\.{3}/gm, subString);
     }
 
