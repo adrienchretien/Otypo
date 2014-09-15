@@ -4,7 +4,7 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var Locale = require("../Locale");
+    var LocaleManager = require("../locales/LocaleManager");
 
     /**
      * Fix a content dashes.
@@ -15,8 +15,8 @@ define(function (require, exports, module) {
      * @return {string} - Content fixed.
      */
     function fix(content, locale) {
-        var emSubString = Locale.getMarks(Locale.DASHES, locale).em,
-            enSubString = Locale.getMarks(Locale.DASHES, locale).en;
+        var emSubString = LocaleManager.getMarks(LocaleManager.DASHES, locale).em,
+            enSubString = LocaleManager.getMarks(LocaleManager.DASHES, locale).en;
 
         content = content.replace(/---/g, emSubString);
         content = content.replace(/--/g, enSubString);

@@ -4,7 +4,7 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var Locale = require("../Locale");
+    var LocaleManager = require("../locales/LocaleManager");
 
     /**
      * Fix a content quotation marks.
@@ -15,7 +15,7 @@ define(function (require, exports, module) {
      * @return {string} - Content fixed.
      */
     function fix(content, locale) {
-        var marks = Locale.getMarks(Locale.QUOTATIONMARKS, locale),
+        var marks = LocaleManager.getMarks(LocaleManager.QUOTATIONMARKS, locale),
             length = marks.length,
             nestLevel = 0,
             regexp = /\B(["'])(.*)(\1)\B/gm,

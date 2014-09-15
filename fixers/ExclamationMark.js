@@ -12,10 +12,10 @@ define(function (require, exports, module) {
      *                            as prefered is used.
      * @return {string} - Content fixed.
      */
-    var Locale = require("../Locale");
+    var LocaleManager = require("../locales/LocaleManager");
 
     function fix(content, locale) {
-        var subString = Locale.getMarks(Locale.EXCLAMATIONMARK, locale);
+        var subString = LocaleManager.getMarks(LocaleManager.EXCLAMATIONMARK, locale);
         return content.replace(/\s?!/gm, subString);
     }
 

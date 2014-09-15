@@ -12,9 +12,9 @@ define(function (require, exports, module) {
         Menus           = brackets.getModule("command/Menus");
 
     // Otypo modules
-    var Fixer      = require("./Fixer"),
-        HtmlParser = require("./parsers/HtmlParser"),
-        Locale     = require("./Locale");
+    var Fixer             = require("./Fixer"),
+        HtmlParser        = require("./parsers/HtmlParser").HtmlParser,
+        LocalePreferences = require("./locales/LocalePreferences");
 
     // Constants
     var COMMAND_ID             = "neol.otypo.editmenu.fix",
@@ -46,7 +46,7 @@ define(function (require, exports, module) {
 
         switch (doc.language._id) {
         case "html":
-            text = HtmlParser.parse(text, Fixer.fixString);
+            text = new HtmlParser(text).each(Fixer.fixString).serialize();
             break;
         default:
             text = Fixer.fixString(text);
@@ -84,7 +84,7 @@ define(function (require, exports, module) {
     var menu = Menus.getMenu(Menus.AppMenuBar.EDIT_MENU);
 
     CommandManager.register("Otypo fix", COMMAND_ID, _commandClick);
-    CommandManager.register("Otypo locale preferences", LOCALE_PREF_COMMAND_ID, Locale.showDialog);
+    CommandManager.register("Otypo locale preferences", LOCALE_PREF_COMMAND_ID, LocalePreferences.showDialogCommand);
 
     menu.addMenuDivider();
     menu.addMenuItem(COMMAND_ID, keyBindings);

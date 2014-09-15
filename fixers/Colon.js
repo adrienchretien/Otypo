@@ -4,7 +4,7 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var Locale = require("../Locale");
+    var LocaleManager = require("../locales/LocaleManager");
 
     /**
      * Fix a content colons.
@@ -15,7 +15,7 @@ define(function (require, exports, module) {
      * @return {string} - Content fixed.
      */
     function fix(content, locale) {
-        var subString = Locale.getMarks(Locale.COLON, locale);
+        var subString = LocaleManager.getMarks(LocaleManager.COLON, locale);
         return content.replace(/\s?:/gm, subString);
     }
 
