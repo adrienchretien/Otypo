@@ -79,7 +79,7 @@ define(function (require, exports, module) {
 
     /**
      * Get a list of locales id property.
-     * @return {array} Array of strings.
+     * @return {array} Array of locales id strings.
      */
     function getLocalesId() {
         var list = [];
@@ -92,7 +92,8 @@ define(function (require, exports, module) {
     }
 
     /**
-     * Get the marks from its name. Valid names are one of the constants.
+     * Get the marks from its name. Valid names are one of the constants
+     * available in this module.
      *
      * @param {string} name - Name of the marks you want.
      * @param {string} [localeID=currentLocaleId] - Locale id ("en_GB", "en_US" or "fr_FR").
