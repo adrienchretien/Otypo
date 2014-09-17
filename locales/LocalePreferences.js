@@ -23,7 +23,7 @@ define(function (require, exports, module) {
     /**
      * Define preferences of the extension.
      */
-    function definePreferences() {
+    function _definePreferences() {
         prefs.definePreference("html", "boolean", false);
         prefs.definePreference("locale", "string", DEFAULT_LOCALE_ID);
         prefs.save();
@@ -92,7 +92,7 @@ define(function (require, exports, module) {
         $checkbox.on("change", setHtml).val(settings.html);
     }
 
-    definePreferences();
+    _definePreferences();
 
     exports.getManager = getManager;
     exports.showDialogCommand = showDialogCommand;

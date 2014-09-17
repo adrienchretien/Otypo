@@ -6,9 +6,15 @@ define(function (require, exports, module) {
 
     var prefs = require("./LocalePreferences").getManager();
 
-    // Public constants
-    var DEFAULT_LOCALE_ID = "en-US",
-        APOSTROPHE = "apostrophe",
+    /**
+     * Default locale id constant.
+     */
+    var DEFAULT_LOCALE_ID = "en-US";
+
+    /**
+     * Marks constants used by getMarks().
+     */
+    var APOSTROPHE = "apostrophe",
         COLON = "colon",
         DASHES = "dashes",
         ELLIPSIS = "ellipsis",
@@ -53,8 +59,8 @@ define(function (require, exports, module) {
     /**
      * Get a locale by its id.
      * @param {string} id - A valid locale id string ("en_GB", "en_US", "fr_FR").
-     * @return {object|null} The corresponding locale or null if the id
-     *                       corresponding to any locales.
+     * @return {?object} The corresponding locale or null if the id
+     *                   corresponding to any locales.
      */
     function _getLocaleById(id) {
         var locale = null;
@@ -95,7 +101,7 @@ define(function (require, exports, module) {
      * Get the marks from its name. Valid names are one of the constants
      * available in this module.
      *
-     * @param {string} name - Name of the marks you want.
+     * @param {!string} name - Constant defining the mark you want.
      * @param {string} [localeID=currentLocaleId] - Locale id ("en_GB", "en_US" or "fr_FR").
      *
      * @return {string|object|array} Returns a string when it's a simple group of characters,
@@ -110,6 +116,7 @@ define(function (require, exports, module) {
     }
 
     exports.DEFAULT_LOCALE_ID = DEFAULT_LOCALE_ID;
+
     exports.APOSTROPHE        = APOSTROPHE;
     exports.COLON             = COLON;
     exports.DASHES            = DASHES;
