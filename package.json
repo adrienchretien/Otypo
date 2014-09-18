@@ -3,7 +3,7 @@
     "title": "Otypo",
     "description": "Fix common micro-typography like dumb quotes, em dash and others.",
     "homepage": "https://github.com/neol/otypo",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "Neol",
     "license": "MIT",
     "engines": {
