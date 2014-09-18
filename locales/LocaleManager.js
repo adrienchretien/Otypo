@@ -28,12 +28,14 @@ define(function (require, exports, module) {
         {
             // Infos
             id: "en-GB",
+            admittedTags: ["en-GB"],
             // Substrings
             quotationMarks: [{opening: "‘", closing: "’"}, {opening: "“", closing: "”"}]
         },
         {
             // Infos
             id: "en-US",
+            admittedTags: ["en", "en-US"],
             // Substrings
             apostrophe: "’",
             colon: ":",
@@ -47,6 +49,7 @@ define(function (require, exports, module) {
         {
             // Infos
             id: "fr-FR",
+            admittedTags: ["fr", "fr-FR"],
             // Substrings
             colon: " :",
             exclamationMark: " !",
@@ -58,25 +61,27 @@ define(function (require, exports, module) {
 
     /**
      * Get a locale by its id.
-     * @param {string} id - A valid locale id string ("en_GB", "en_US", "fr_FR").
+     * @param {string} id - A valid locale id string.
      * @return {?object} The corresponding locale or null if the id
      *                   corresponding to any locales.
      */
     function _getLocaleById(id) {
         var locale = null;
 
-        locales.forEach(function (item) {
-            if (item.id === id) {
-                locale = item;
-            }
+        locales.forEach(function (obj) {
+            obj.admittedTags.forEach(function (tag) {
+                if (tag === id) {
+                    locale = obj;
+                }
+            });
         });
 
         return locale;
     }
 
     /**
-     * Get the current locale defined as preference.
-     * @return {object} The current locale.
+     * Get the current locale defined as preference or the default locale.
+     * @return {object} The locale.
      */
     function _getCurrentLocale() {
         var currentId = prefs.get("locale");
